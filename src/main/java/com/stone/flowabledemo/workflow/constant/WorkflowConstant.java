@@ -13,8 +13,14 @@ public class WorkflowConstant {
     public static final String SINGLE_INSTANCE_EVAL_APPROVED = "评估通过";
     public static final String SINGLE_INSTANCE_EVAL_REJECTED = "评估不通过";
 
+    public static final String EVAL_RESULT_APPROVED = "approved";
+    public static final String EVAL_RESULT_REJECTED = "rejected";
 
+    public static final String SINGLE_ID_NEW = "_new";
     public static final String SINGLE_ID_EVAL = "_eval";
     public static final String SINGLE_ID_APPROVED = "_approved";
     public static final String SINGLE_ID_REJECTED = "_rejected";
+
+    public static final String VAR_KEY_PRINCIPAL = "principal";
+    public static final String VAR_KEY_OUTCOME = "outcome";
 }

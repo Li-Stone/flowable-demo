@@ -6,12 +6,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -26,8 +24,8 @@ public class SingleTaskController {
     @ApiOperation("创建一个新流程")
     @ApiImplicitParam(name="username", value="负责人", required = true)
     @PostMapping("create")
-    public ResponseData<Object> create(String username) {
-        ResponseData<Object> response = new ResponseData<>();
+    public ResponseData<Map<String, Object>> create(String username) {
+        ResponseData<Map<String, Object>> response = new ResponseData<>();
         response.setData(singleTaskService.startProcess(username));
         return response;
     }
@@ -38,8 +36,8 @@ public class SingleTaskController {
             @ApiImplicitParam(name="username", value="评估人", required = true)
     })
     @PutMapping("sendEval")
-    public ResponseData<Object> sendEval(String processId, String username) {
-        ResponseData<Object> response = new ResponseData<>();
+    public ResponseData<Boolean> sendEval(String processId, String username) {
+        ResponseData<Boolean> response = new ResponseData<>();
         response.setData(singleTaskService.sendEval(processId, username));
         return response;
     }
@@ -50,8 +48,8 @@ public class SingleTaskController {
             @ApiImplicitParam(name="username", value="转派人", required = true)
     })
     @PutMapping("transferEval")
-    public ResponseData<Object> transferEval(String taskId, String username) {
-        ResponseData<Object> response = new ResponseData<>();
+    public ResponseData<Boolean> transferEval(String taskId, String username) {
+        ResponseData<Boolean> response = new ResponseData<>();
         response.setData(singleTaskService.transferEval(taskId, username));
         return response;
     }
@@ -62,9 +60,30 @@ public class SingleTaskController {
             @ApiImplicitParam(name="result", value="评估结果", required = true)
     })
     @PutMapping("doEval")
-    public ResponseData<Object> doEval(String taskId, String result) {
-        ResponseData<Object> response = new ResponseData<>();
+    public ResponseData<Boolean> doEval(String taskId, String result) {
+        ResponseData<Boolean> response = new ResponseData<>();
         response.setData(singleTaskService.doEval(taskId, result));
+        return response;
+    }
+
+    @ApiOperation("删除评估")
+    @ApiImplicitParam(name="taskId", value="任务Id", required = true)
+    @DeleteMapping("deleteTask/{taskId}")
+    public ResponseData<Boolean> deleteTask(@PathVariable String taskId) {
+        ResponseData<Boolean> response = new ResponseData<>();
+        response.setData(singleTaskService.deleteTask(taskId));
+        return response;
+    }
+
+    @ApiOperation("转派流程负责人")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="processId", value="流程id", required = true),
+            @ApiImplicitParam(name="username", value="新负责人", required = true)
+    })
+    @PutMapping("transferPrincipal/{processId}/{username}")
+    public ResponseData<Boolean> transferPrincipal(@PathVariable String processId, @PathVariable String username) {
+        ResponseData<Boolean> response = new ResponseData<>();
+        response.setData(singleTaskService.transferPrincipal(processId, username));
         return response;
     }
 }
