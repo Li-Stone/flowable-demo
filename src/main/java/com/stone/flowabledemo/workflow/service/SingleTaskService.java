@@ -21,6 +21,14 @@ public interface SingleTaskService {
     Object sendEval(String processId, String username);
 
     /**
+     * 任务转派
+     * @param taskId
+     * @param username
+     * @return
+     */
+    Object transferEval(String taskId, String username);
+
+    /**
      * 处理评估
      *
      * @param taskId
