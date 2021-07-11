@@ -104,6 +104,7 @@ public class SingleTaskServiceImpl implements SingleTaskService {
 
     @Override
     public boolean transferPrincipal(String processId, String principal) {
+        // todo executionId 手动删除再添加 act_ru_identitylink 数据
         runtimeService.setVariable(processId, WorkflowConstant.VAR_KEY_PRINCIPAL, principal);
         return true;
     }

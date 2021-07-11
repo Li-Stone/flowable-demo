@@ -30,7 +30,7 @@ public class CommonServiceImpl implements CommonService {
             query.processInstanceId(processId);
         }
         if (StringUtils.isNotBlank(username)) {
-            query.or().taskAssignee(username).taskCandidateUser(username).endOr();
+            query.taskCandidateOrAssigned(username);
         }
         List<Task> taskList = query.active().list();
         List<TaskDto> list = new ArrayList<>();

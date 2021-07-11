@@ -23,4 +23,7 @@ public class WorkflowConstant {
 
     public static final String VAR_KEY_PRINCIPAL = "principal";
     public static final String VAR_KEY_OUTCOME = "outcome";
+
+    public static final String VAR_KEY_EVAL_REJECTED = "rejected";
+    public static final String VAR_KEY_EVAL_CURRENT_RESULT = "currentResult";
 }
