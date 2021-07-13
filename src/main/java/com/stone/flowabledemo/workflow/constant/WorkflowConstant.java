@@ -8,10 +8,13 @@ package com.stone.flowabledemo.workflow.constant;
  */
 public class WorkflowConstant {
 
-    public static final String SINGLE_INSTANCE_NEW = "新建";
-    public static final String SINGLE_INSTANCE_EVAL = "评估中";
-    public static final String SINGLE_INSTANCE_EVAL_APPROVED = "评估通过";
-    public static final String SINGLE_INSTANCE_EVAL_REJECTED = "评估不通过";
+    public static final String PROCESS_KEY_SINGLE_INSTANCE = "single_instance";
+    public static final String PROCESS_KEY_MULTI_INSTANCE = "multi_instance";
+
+    public static final String STATUS_NEW = "新建";
+    public static final String STATUS_EVAL = "评估中";
+    public static final String STATUS_APPROVED = "评估通过";
+    public static final String STATUS_REJECTED = "评估不通过";
 
     public static final String EVAL_RESULT_APPROVED = "approved";
     public static final String EVAL_RESULT_REJECTED = "rejected";

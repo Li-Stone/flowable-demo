@@ -2,6 +2,7 @@ package com.stone.flowabledemo.workflow.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Administrator
@@ -23,7 +24,7 @@ public interface MultiInstanceService {
      * @param userList
      * @return
      */
-    boolean sendEval(String processId, List<String> userList);
+    boolean sendEval(String processId, Set<String> userList);
 
     /**
      * 任务转派

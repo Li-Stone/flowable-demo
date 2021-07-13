@@ -30,8 +30,8 @@ public class SingleTaskServiceImpl implements SingleTaskService {
     public Map<String, Object> startProcess(String user) {
         Map<String, Object> val = new HashMap<>(2);
         val.put(WorkflowConstant.VAR_KEY_PRINCIPAL, user);
-        ProcessInstance instance = runtimeService.startProcessInstanceByKey("single_instance", val);
-        runtimeService.setProcessInstanceName(instance.getProcessInstanceId(), "single_instance");
+        ProcessInstance instance = runtimeService.startProcessInstanceByKey(WorkflowConstant.PROCESS_KEY_SINGLE_INSTANCE, val);
+        runtimeService.setProcessInstanceName(instance.getProcessInstanceId(), WorkflowConstant.PROCESS_KEY_SINGLE_INSTANCE);
         Map<String, Object> result = new HashMap<>(2);
         result.put("processId", instance.getProcessInstanceId());
         return result;
@@ -46,13 +46,13 @@ public class SingleTaskServiceImpl implements SingleTaskService {
         String taskName = task.getName();
         Map<String, Object> val = new HashMap<>(4);
         switch (taskName) {
-            case WorkflowConstant.SINGLE_INSTANCE_NEW:
+            case WorkflowConstant.STATUS_NEW:
                 val.put("per", username);
                 taskService.complete(task.getId(), val);
                 break;
-            case WorkflowConstant.SINGLE_INSTANCE_EVAL_APPROVED:
-            case WorkflowConstant.SINGLE_INSTANCE_EVAL_REJECTED:
-                String sourceId = WorkflowConstant.SINGLE_INSTANCE_EVAL_APPROVED.equals(taskName) ?
+            case WorkflowConstant.STATUS_APPROVED:
+            case WorkflowConstant.STATUS_REJECTED:
+                String sourceId = WorkflowConstant.STATUS_APPROVED.equals(taskName) ?
                         WorkflowConstant.SINGLE_ID_APPROVED : WorkflowConstant.SINGLE_ID_REJECTED;
                 runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId())
                         .moveActivityIdTo(sourceId, WorkflowConstant.SINGLE_ID_EVAL)
@@ -78,7 +78,7 @@ public class SingleTaskServiceImpl implements SingleTaskService {
         if(task==null) {
             throw new CheckException("任务不存在");
         }
-        if (!task.getName().equals(WorkflowConstant.SINGLE_INSTANCE_EVAL)) {
+        if (!task.getName().equals(WorkflowConstant.STATUS_EVAL)) {
             throw new CheckException("非评估中不可删除任务");
         }
         // 删除任务即是流程从当前节点回退到最近一次发评估操作前的节点

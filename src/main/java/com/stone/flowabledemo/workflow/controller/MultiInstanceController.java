@@ -1,15 +1,18 @@
 package com.stone.flowabledemo.workflow.controller;
 
 import com.stone.flowabledemo.constant.ResponseData;
+import com.stone.flowabledemo.util.CheckUtil;
 import com.stone.flowabledemo.workflow.service.MultiInstanceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -31,6 +34,7 @@ public class MultiInstanceController {
     @ApiImplicitParam(name="username", value="负责人", required = true)
     @PostMapping("create")
     public ResponseData<Map<String, Object>> create(String username) {
+        CheckUtil.check(StringUtils.isNoneBlank(username), "负责人不能为空");
         ResponseData<Map<String, Object>> response = new ResponseData<>();
         response.setData(multiInstanceService.startProcess(username));
         return response;
@@ -44,7 +48,7 @@ public class MultiInstanceController {
     @PutMapping("sendEval")
     public ResponseData<Boolean> sendEval(String processId, String... username) {
         ResponseData<Boolean> response = new ResponseData<>();
-        response.setData(multiInstanceService.sendEval(processId, Arrays.stream(username).collect(Collectors.toList())));
+        response.setData(multiInstanceService.sendEval(processId, new HashSet<>(Arrays.stream(username).collect(Collectors.toList()))));
         return response;
     }
 
